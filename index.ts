@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { router } from './src/routes/register.router';
+// import { router } from './src/routes/register.router';
 
 export const app = express();
 app.use(express.json());
@@ -12,7 +12,7 @@ app.use(cors(
     allowedHeaders: ['Content-Type', 'Authorization']             
   }
 ))
-app.use('/',router);
+// app.use('/',router);
 
 const PORT =  5050;
 app.listen(PORT, () => {
