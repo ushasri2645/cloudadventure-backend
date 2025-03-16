@@ -32,7 +32,7 @@ router.post("/users", upload.single("file"), async (req, res) => {
     if (!req.body.firstName || !req.body.lastName) {
       res.status(400).json({ message: "Please provide all necesary fields." });
     }
-    s3FileUpload(
+    await s3FileUpload(
       `${req.file.originalname}`,
       `tmp/images/${req.file.originalname}`
     );
