@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { router } from './src/routes/registerRouter';
+import { router } from './src/routes/register.router';
 
 export const app = express();
 app.use(express.json());
