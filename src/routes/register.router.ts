@@ -6,6 +6,10 @@ import { addUser } from "../Utils/add-user";
 
 export const router = express.Router();
 
+const uploadDir = "./tmp/images";
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     return cb(null, "./tmp/images");
@@ -16,9 +20,9 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.get('/health',(req,res)=>{
-  res.status(200).json({message:"ok"})
-})
+router.get("/health", (req, res) => {
+  res.status(200).json({ message: "ok" });
+});
 router.post("/users", upload.single("file"), async (req, res) => {
   try {
     if (!req.file) {
@@ -32,7 +36,7 @@ router.post("/users", upload.single("file"), async (req, res) => {
       `${req.file.originalname}`,
       `tmp/images/${req.file.originalname}`
     );
-    // fs.unlinkSync(`tmp/images/${req.file.originalname}`);
+    fs.unlinkSync(`${uploadDir}/${req.file.originalname}`);
     const user = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -40,7 +44,7 @@ router.post("/users", upload.single("file"), async (req, res) => {
     };
     addUser(user);
     res.status(200).json({ message: "User creation Success." });
-  } catch (e) {
-    res.status(500).json({ message: "User creation Failed." });
+  } catch (e: any) {
+    res.status(500).json({ message: `${e.message}` });
   }
 });
