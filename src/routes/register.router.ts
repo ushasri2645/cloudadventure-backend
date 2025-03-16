@@ -16,6 +16,9 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+router.get('/health',(req,res)=>{
+  res.status(200).json({message:"ok"})
+})
 router.post("/users", upload.single("file"), async (req, res) => {
   try {
     if (!req.file) {
